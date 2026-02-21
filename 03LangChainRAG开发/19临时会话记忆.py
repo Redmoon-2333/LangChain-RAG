@@ -1,3 +1,9 @@
+"""
+临时会话记忆：使用InMemoryChatMessageHistory实现内存存储的会话历史
+特点：会话数据存储在内存中，进程结束后数据丢失，适用于开发测试
+核心：RunnableWithMessageHistory自动管理历史消息的读取和保存
+"""
+
 from langchain_community.chat_models.tongyi import ChatTongyi
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
@@ -39,7 +45,7 @@ def get_history(session_id):
 conversation_chain = RunnableWithMessageHistory(
     base_chain,                     # 被增强的原有chain
     get_history,                    # 会话历史工厂函数
-    input_messages_key="input",     # 用户输入在模板中的变量名
+    input_messages_key="input",      # 用户输入在模板中的变量名
     history_messages_key="chat_history"  # 历史消息在模板中的变量名
 )
 

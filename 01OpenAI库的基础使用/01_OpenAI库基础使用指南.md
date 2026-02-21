@@ -5,6 +5,19 @@
 
 ---
 
+## 学习目标
+
+通过本指南的学习，你将能够：
+
+- 理解OpenAI SDK的基本架构和工作原理
+- 掌握API密钥的安全配置方法
+- 熟练发送单轮和多轮对话请求
+- 实现流式输出以提升用户体验
+- 管理对话历史实现上下文理解
+- 应用性能优化策略提升系统效率
+
+---
+
 ## 目录
 
 1. [项目概述](#项目概述)
@@ -19,6 +32,9 @@
 ---
 
 ## 项目概述
+
+### 章节摘要
+本章节介绍了OpenAI库基础使用指南的核心内容和技术栈，帮助读者快速了解本指南的学习目标和适用范围。
 
 本项目系列文件演示如何使用OpenAI Python SDK与阿里云百炼（DashScope）提供的大语言模型进行交互。通过本指南，你将学会：
 
@@ -55,6 +71,9 @@ flowchart LR
 ---
 
 ## 环境配置说明
+
+### 章节摘要
+本章节详细介绍了OpenAI库的环境配置步骤，包括依赖安装、API密钥配置和获取方法，为后续的开发和测试做好准备。
 
 ### 1. 安装依赖
 
@@ -111,6 +130,9 @@ client = OpenAI(
 
 ## 核心功能模块介绍
 
+### 章节摘要
+本章节详细介绍了OpenAI库的核心功能模块，包括客户端初始化、对话消息结构、流式输出和多轮对话等关键概念和实现方法。
+
 ### 1. 客户端初始化模块
 
 **核心代码**（来自01测试APIEKEY.py）：
@@ -119,9 +141,12 @@ client = OpenAI(
 import os
 from openai import OpenAI
 
+# 初始化OpenAI客户端
+# api_key: 使用环境变量获取API密钥，提高安全性
+# base_url: 指定阿里云百炼API服务地址
 client = OpenAI(
-    api_key=os.getenv("DASHSCOPE_API_KEY"),
-    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+    api_key=os.getenv("DASHSCOPE_API_KEY"),  # 从环境变量读取API密钥
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",  # 阿里云百炼兼容OpenAI接口地址
 )
 ```
 
@@ -242,6 +267,9 @@ flowchart TD
 
 ## 使用示例
 
+### 章节摘要
+本章节提供了多个OpenAI库的使用示例，包括API密钥测试、基础对话、流式输出和多轮对话等场景，帮助读者快速上手实际应用。
+
 ### 示例1：测试API密钥（01测试APIEKEY.py）
 
 **功能**：验证API密钥配置是否正确
@@ -252,19 +280,26 @@ flowchart TD
 import os
 from openai import OpenAI
 
+# 初始化客户端
 client = OpenAI(
-    api_key=os.getenv("DASHSCOPE_API_KEY"),
-    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+    api_key=os.getenv("DASHSCOPE_API_KEY"),  # 从环境变量读取API密钥
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",  # 阿里云百炼API地址
 )
+
+# 创建对话完成请求
 completion = client.chat.completions.create(
-    model="qwen3.5-plus",
+    model="qwen3.5-plus",  # 使用的模型名称
     messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "你是谁？"},
+        {"role": "system", "content": "You are a helpful assistant."},  # 系统消息，定义助手角色
+        {"role": "user", "content": "你是谁？"},  # 用户消息，测试问题
     ],
-    stream=True
+    stream=True  # 启用流式输出
 )
+
+# 处理流式响应
 for chunk in completion:
+    # 输出每个chunk的内容，使用end=""确保不换行
+    # flush=True确保内容立即显示
     print(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
@@ -362,6 +397,9 @@ for chunk in response:
 
 ## 常见问题解决
 
+### 章节摘要
+本章节汇总了使用OpenAI库时常见的问题及其解决方案，帮助读者快速排查和解决开发过程中遇到的技术难题。
+
 ### 1. API密钥错误
 
 **错误信息**：`AuthenticationError`
@@ -427,6 +465,9 @@ client = OpenAI(
 
 ## 代码结构说明
 
+### 章节摘要
+本章节详细介绍了项目的代码结构和文件组织，帮助读者理解各个文件的功能和核心知识点，便于快速定位和使用相关代码。
+
 ### 文件列表
 
 | 文件名 | 功能说明 | 核心知识点 |
@@ -484,6 +525,9 @@ for chunk in response:
 ---
 
 ## 深入技术原理
+
+### 章节摘要
+本章节深入探讨了OpenAI库的技术原理，包括Token计算、成本控制、模型参数调优和对话历史管理等核心概念，帮助读者理解底层机制并优化应用。
 
 ### Token与成本控制
 
@@ -611,6 +655,9 @@ def selective_history(messages, important_keywords):
 
 ## 性能优化与最佳实践
 
+### 章节摘要
+本章节介绍了OpenAI库的性能优化策略和最佳实践，包括错误处理、连接池配置、异步调用、缓存策略和安全性等方面，帮助读者构建高效可靠的应用。
+
 ### 1. 错误处理与重试机制
 
 ```python
@@ -619,6 +666,17 @@ from openai import OpenAI
 from openai import APIError, RateLimitError
 
 def create_with_retry(client, messages, max_retries=3):
+    """
+    带重试机制的对话创建函数
+    
+    Args:
+        client: OpenAI客户端实例
+        messages: 对话消息列表
+        max_retries: 最大重试次数
+        
+    Returns:
+        对话响应对象
+    """
     for attempt in range(max_retries):
         try:
             response = client.chat.completions.create(
@@ -627,7 +685,7 @@ def create_with_retry(client, messages, max_retries=3):
             )
             return response
         except RateLimitError:
-            wait_time = 2 ** attempt  # 指数退避
+            wait_time = 2 ** attempt  # 指数退避策略
             print(f"触发限流，等待{wait_time}秒...")
             time.sleep(wait_time)
         except APIError as e:
@@ -714,6 +772,9 @@ def chat_with_cache(client, messages):
 ---
 
 ## 进阶学习建议
+
+### 章节摘要
+本章节提供了OpenAI库的进阶学习路径和建议，帮助读者在掌握基础使用后进一步提升技术能力，为后续的LangChain学习做好准备。
 
 1. **提示词工程**：学习如何编写高质量的system提示词
 2. **Token管理**：了解Token计数和成本控制

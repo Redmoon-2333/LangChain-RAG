@@ -1,5 +1,6 @@
 """
-文件功能：FewShotPromptTemplate少样本模板（与10对比：包含示例）
+FewShotPromptTemplate少样本模板：提供示例引导模型输出特定格式
+与10对比：包含示例数据，让模型学习输出模式，适用于格式控制、风格迁移等场景
 """
 
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
@@ -9,20 +10,23 @@ from langchain_community.llms.tongyi import Tongyi
 example_template = PromptTemplate.from_template("单词：{word}, 反义词：{antonym}")
 
 # 示例数据：提供少样本学习示例
+# 模型通过示例理解任务要求，提高输出准确性
 examples_data = [
     {"word": "大", "antonym": "小"},
     {"word": "上", "antonym": "下"},
 ]
 
-# FewShotPromptTemplate: prefix(指令) + examples(示例) + suffix(用户输入)
+# FewShotPromptTemplate组成结构：
+# prefix(前缀指令) + examples(示例数据) + suffix(用户输入)
 few_shot_template = FewShotPromptTemplate(
     example_prompt=example_template,  # 示例格式模板
-    examples=examples_data,            # 示例数据集
+    examples=examples_data,           # 示例数据集
     prefix="告知我单词的反义词，我提供如下的示例：",  # 前缀指令
     suffix="基于前面的示例告知我，{input_word}的反义词是？",  # 后缀用户输入
     input_variables=['input_word']     # 用户输入变量列表
 )
 
+# invoke返回PromptValue对象，to_string()转换为字符串
 prompt_text = few_shot_template.invoke(input={"input_word": "左"}).to_string()
 print(prompt_text)
 

@@ -1,3 +1,9 @@
+"""
+长期会话记忆：使用自定义FileChatMessageHistory实现文件持久化
+与19对比：数据保存到本地文件，进程重启后仍可读取历史
+核心：继承BaseChatMessageHistory，实现messages属性和add_messages方法
+"""
+
 import os, json
 from typing import Sequence
 
@@ -12,7 +18,9 @@ from langchain_core.runnables import RunnableWithMessageHistory
 class FileChatMessageHistory(BaseChatMessageHistory):
     """文件持久化的会话记忆：将聊天历史存储到本地JSON文件
     
-    与InMemoryChatMessageHistory对比：内存存储重启丢失，文件存储持久化保留
+    与InMemoryChatMessageHistory对比：
+    - 内存存储：进程结束后丢失，重启数据清零
+    - 文件存储：持久化保存，重启后可读取
     """
     
     def __init__(self, session_id, storage_path):
@@ -30,7 +38,8 @@ class FileChatMessageHistory(BaseChatMessageHistory):
         all_messages = list(self.messages)  # 读取已有历史
         all_messages.extend(messages)       # 追加新消息
 
-        # 持久化：BaseMessage → dict → JSON文件
+        # 持久化流程：BaseMessage → dict → JSON文件
+        # message_to_dict: 将Message对象转换为可序列化的字典
         new_messages = [message_to_dict(message) for message in all_messages]
         with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(new_messages, f)
@@ -41,7 +50,8 @@ class FileChatMessageHistory(BaseChatMessageHistory):
         try:
             with open(self.file_path, "r", encoding="utf-8") as f:
                 messages_data = json.load(f)  # list[dict]
-                return messages_from_dict(messages_data)  # dict → BaseMessage
+                # messages_from_dict: 将字典转换回Message对象
+                return messages_from_dict(messages_data)
         except FileNotFoundError:
             return []  # 首次会话无历史文件
 

@@ -10,3 +10,4 @@ Abandoned/
 __pycache__/
 *.py[cod]
 *$py.class
+/.promptx/
