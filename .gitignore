@@ -1,0 +1,12 @@
+# Project specific
+Abandoned/
+.trae/
+.jbeval/datasets/
+
+# IDE
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
