@@ -5,6 +5,16 @@
 
 ---
 
+## 前置知识
+
+在开始学习本指南之前，你需要具备以下基础知识：
+
+1. **Python基础** → 变量、函数、基本语法
+2. **HTTP请求概念** → 了解客户端与服务器的交互方式
+3. **环境变量配置** → 知道如何在操作系统中设置环境变量
+
+---
+
 ## 学习目标
 
 通过本指南的学习，你将能够：
@@ -34,6 +44,7 @@
 ## 项目概述
 
 ### 章节摘要
+
 本章节介绍了OpenAI库基础使用指南的核心内容和技术栈，帮助读者快速了解本指南的学习目标和适用范围。
 
 本项目系列文件演示如何使用OpenAI Python SDK与阿里云百炼（DashScope）提供的大语言模型进行交互。通过本指南，你将学会：
@@ -68,11 +79,14 @@ flowchart LR
     style F fill:#fff3e0
 ```
 
+**图1：OpenAI库学习路径**
+
 ---
 
 ## 环境配置说明
 
 ### 章节摘要
+
 本章节详细介绍了OpenAI库的环境配置步骤，包括依赖安装、API密钥配置和获取方法，为后续的开发和测试做好准备。
 
 ### 1. 安装依赖
@@ -89,6 +103,11 @@ pip install openai
 
 #### 方式一：使用环境变量（推荐）
 
+**为什么使用环境变量**：
+- 避免密钥硬编码在代码中
+- 便于在不同环境切换配置
+- 防止密钥意外提交到版本控制系统
+
 Windows PowerShell:
 ```powershell
 $env:DASHSCOPE_API_KEY="你的API密钥"
@@ -103,11 +122,6 @@ Linux/Mac:
 ```bash
 export DASHSCOPE_API_KEY="你的API密钥"
 ```
-
-**为什么使用环境变量**：
-- 避免密钥硬编码在代码中
-- 便于在不同环境切换配置
-- 防止密钥意外提交到版本控制系统
 
 #### 方式二：直接在代码中配置（不推荐用于生产环境）
 
@@ -131,9 +145,12 @@ client = OpenAI(
 ## 核心功能模块介绍
 
 ### 章节摘要
+
 本章节详细介绍了OpenAI库的核心功能模块，包括客户端初始化、对话消息结构、流式输出和多轮对话等关键概念和实现方法。
 
 ### 1. 客户端初始化模块
+
+**核心概念**：**OpenAI客户端**是与大语言模型交互的入口点，负责管理连接、发送请求和接收响应。
 
 **核心代码**（来自01测试APIEKEY.py）：
 
@@ -168,7 +185,7 @@ client = OpenAI(
 
 ### 2. 对话消息结构
 
-messages列表是对话的核心，包含以下角色：
+**核心概念**：**messages列表**是对话的核心，包含以下角色：
 
 | 角色 | 说明 | 用途 |
 |------|------|------|
@@ -202,10 +219,7 @@ messages列表是对话的核心，包含以下角色：
 
 ### 4. 流式输出
 
-**特点**：
-- 模型每生成一部分内容就立即返回
-- 大幅降低首字延迟（TTFT）
-- 提升对话交互体验
+**核心概念**：**流式输出**让模型每生成一部分内容就立即返回，大幅降低首字延迟（TTFT），提升对话交互体验。
 
 **首字延迟（TTFT）详解**：
 
@@ -229,6 +243,8 @@ sequenceDiagram
     
     Note over U,C: TTFT (Time To First Token)
 ```
+
+**图2：首字延迟流程示意图**
 
 **适用场景**：
 - 实时对话应用
@@ -263,11 +279,14 @@ flowchart TD
     F --> I[模型响应]
 ```
 
+**图3：对话历史管理策略**
+
 ---
 
 ## 使用示例
 
 ### 章节摘要
+
 本章节提供了多个OpenAI库的使用示例，包括API密钥测试、基础对话、流式输出和多轮对话等场景，帮助读者快速上手实际应用。
 
 ### 示例1：测试API密钥（01测试APIEKEY.py）
@@ -302,6 +321,11 @@ for chunk in completion:
     # flush=True确保内容立即显示
     print(chunk.choices[0].delta.content, end="", flush=True)
 ```
+
+**代码解析**：
+- `stream=True` 启用流式输出模式
+- `chunk.choices[0].delta.content` 获取每个数据块的内容
+- `end=""` 和 `flush=True` 确保内容实时显示
 
 ### 示例2：基础非流式对话（02OpenAI库的基础使用.py）
 
@@ -393,11 +417,17 @@ for chunk in response:
     )
 ```
 
+**本节要点**：
+1. 流式输出通过 `stream=True` 启用
+2. 多轮对话需要在messages中包含完整历史
+3. 每个角色（system/user/assistant）在对话中扮演不同作用
+
 ---
 
 ## 常见问题解决
 
 ### 章节摘要
+
 本章节汇总了使用OpenAI库时常见的问题及其解决方案，帮助读者快速排查和解决开发过程中遇到的技术难题。
 
 ### 1. API密钥错误
@@ -466,6 +496,7 @@ client = OpenAI(
 ## 代码结构说明
 
 ### 章节摘要
+
 本章节详细介绍了项目的代码结构和文件组织，帮助读者理解各个文件的功能和核心知识点，便于快速定位和使用相关代码。
 
 ### 文件列表
@@ -527,13 +558,14 @@ for chunk in response:
 ## 深入技术原理
 
 ### 章节摘要
+
 本章节深入探讨了OpenAI库的技术原理，包括Token计算、成本控制、模型参数调优和对话历史管理等核心概念，帮助读者理解底层机制并优化应用。
 
 ### Token与成本控制
 
 #### 什么是Token
 
-Token是语言模型处理文本的基本单位。在中文语境下，通常1个Token约等于1-2个汉字；在英文语境下，约等于0.75个单词。
+**Token**是语言模型处理文本的基本单位。在中文语境下，通常1个Token约等于1-2个汉字；在英文语境下，约等于0.75个单词。
 
 ```mermaid
 flowchart LR
@@ -545,6 +577,8 @@ flowchart LR
     
     C --> G[计费]
 ```
+
+**图4：Token处理流程**
 
 #### 成本计算
 
@@ -585,7 +619,10 @@ print(f"Completion Token: {response.usage.completion_tokens}")
 
 **数学原理**：
 temperature实际上是对softmax概率分布的缩放：
-$$P_i = \frac{exp(z_i / T)}{\sum exp(z_j / T)}$$
+
+$$
+P_i = \frac{exp(z_i / T)}{\sum exp(z_j / T)}
+$$
 
 其中T为temperature，T越大，概率分布越平缓。
 
@@ -651,11 +688,17 @@ def selective_history(messages, important_keywords):
     return filtered_messages
 ```
 
+**本节要点**：
+1. Token是模型计费的基本单位
+2. temperature控制输出随机性，根据场景选择合适的值
+3. 对话历史管理是长对话应用的关键优化点
+
 ---
 
 ## 性能优化与最佳实践
 
 ### 章节摘要
+
 本章节介绍了OpenAI库的性能优化策略和最佳实践，包括错误处理、连接池配置、异步调用、缓存策略和安全性等方面，帮助读者构建高效可靠的应用。
 
 ### 1. 错误处理与重试机制
@@ -668,6 +711,9 @@ from openai import APIError, RateLimitError
 def create_with_retry(client, messages, max_retries=3):
     """
     带重试机制的对话创建函数
+    
+    Why: 网络请求可能因临时故障失败，重试机制提高系统健壮性
+    Warning: 指数退避策略避免对服务器造成过大压力
     
     Args:
         client: OpenAI客户端实例
@@ -774,6 +820,7 @@ def chat_with_cache(client, messages):
 ## 进阶学习建议
 
 ### 章节摘要
+
 本章节提供了OpenAI库的进阶学习路径和建议，帮助读者在掌握基础使用后进一步提升技术能力，为后续的LangChain学习做好准备。
 
 1. **提示词工程**：学习如何编写高质量的system提示词
@@ -784,5 +831,30 @@ def chat_with_cache(client, messages):
 
 ---
 
-**文档版本**：v1.1  
+## 核心知识点回顾
+
+| 知识点 | 核心概念 | 关键方法/参数 |
+|--------|---------|--------------|
+| 客户端初始化 | OpenAI客户端是与模型交互的入口 | `OpenAI(api_key=..., base_url=...)` |
+| 消息结构 | system/user/assistant三种角色 | `{"role": "...", "content": "..."}` |
+| 流式输出 | 逐token返回，降低延迟 | `stream=True` |
+| 多轮对话 | 需要发送完整历史 | messages列表包含所有历史 |
+| Token计费 | 按输入+输出token数计费 | `response.usage.total_tokens` |
+| temperature | 控制输出随机性 | 0.0-1.0，越低越确定 |
+
+---
+
+## 常见错误速查表
+
+| 错误现象 | 可能原因 | 解决方案 |
+|---------|---------|---------|
+| AuthenticationError | API密钥错误 | 检查环境变量或密钥值 |
+| NotFoundError | 模型名称错误 | 确认模型名称拼写 |
+| 'NoneType' has no attribute | 流式输出首chunk为None | 添加None检查 |
+| 超时错误 | 网络问题 | 增加timeout参数 |
+| 模型忘记上下文 | 未包含历史消息 | 确保messages包含完整历史 |
+
+---
+
+**文档版本**：v1.2  
 **最后更新**：2026年2月
