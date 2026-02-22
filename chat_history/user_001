@@ -1,0 +1,52 @@
+[
+  {
+    "type": "human",
+    "data": {
+      "content": "我的体重170斤，尺码推荐",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "human",
+      "name": null,
+      "id": null
+    }
+  },
+  {
+    "type": "ai",
+    "data": {
+      "content": "根据您提供的体重170斤，结合参考资料中的尺码推荐：\n\n- 体重160–180斤，对应建议尺码为 **3XL**（适用于身高178–185cm）；\n- 若您的身高在180–190cm范围内，体重180–210斤才建议穿4XL，而您体重为170斤，略低于该区间下限。\n\n因此，**推荐尺码为 3XL**。  \n如身高接近或超过185cm，可考虑4XL，但一般情况下3XL更合适。",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "ai",
+      "name": null,
+      "id": null,
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": null
+    }
+  },
+  {
+    "type": "human",
+    "data": {
+      "content": "我的体重170斤，尺码推荐",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "human",
+      "name": null,
+      "id": null
+    }
+  },
+  {
+    "type": "ai",
+    "data": {
+      "content": "根据您提供的体重170斤，参考尺码推荐标准：\n\n- 体重160–180斤，对应建议尺码为 **3XL**（适用于身高178–185cm）。\n\n因此，**推荐您选择 3XL 尺码**。  \n如您的身高明显超出185cm，可考虑4XL，但一般情况下3XL更为合适。",
+      "additional_kwargs": {},
+      "response_metadata": {},
+      "type": "ai",
+      "name": null,
+      "id": null,
+      "tool_calls": [],
+      "invalid_tool_calls": [],
+      "usage_metadata": null
+    }
+  }
+]
