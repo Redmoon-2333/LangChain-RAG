@@ -1,0 +1,27 @@
+2026-02-22 23:39:10 - agent - INFO - middleware.py:51 - [log_before_model]: 即将调用模型，带有1条消息，消息如下：
+2026-02-22 23:39:10 - agent - INFO - middleware.py:54 - [log_before_model]: ----------省略已输出内容----------
+2026-02-22 23:39:10 - agent - INFO - middleware.py:56 - [log_before_model][HumanMessage]: 扫地机器人在我所在地区的气温下如何保养
+2026-02-22 23:39:56 - agent - INFO - middleware.py:28 - [tool monitor]执行工具: get_user_location
+2026-02-22 23:39:56 - agent - INFO - middleware.py:29 - [tool monitor]参数: {}
+2026-02-22 23:39:56 - agent - INFO - middleware.py:32 - [tool monitor]工具get_user_location调用成功
+2026-02-22 23:39:56 - agent - INFO - middleware.py:51 - [log_before_model]: 即将调用模型，带有3条消息，消息如下：
+2026-02-22 23:39:56 - agent - INFO - middleware.py:54 - [log_before_model]: ----------省略已输出内容----------
+2026-02-22 23:39:56 - agent - INFO - middleware.py:56 - [log_before_model][ToolMessage]: 合肥
+2026-02-22 23:40:41 - agent - INFO - middleware.py:28 - [tool monitor]执行工具: get_weather
+2026-02-22 23:40:41 - agent - INFO - middleware.py:29 - [tool monitor]参数: {'city': '合肥'}
+2026-02-22 23:40:41 - agent - INFO - middleware.py:32 - [tool monitor]工具get_weather调用成功
+2026-02-22 23:40:41 - agent - INFO - middleware.py:51 - [log_before_model]: 即将调用模型，带有5条消息，消息如下：
+2026-02-22 23:40:41 - agent - INFO - middleware.py:54 - [log_before_model]: ----------省略已输出内容----------
+2026-02-22 23:40:41 - agent - INFO - middleware.py:56 - [log_before_model][ToolMessage]: 城市合肥天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时内降雨概率极低
+2026-02-22 23:41:28 - agent - INFO - middleware.py:28 - [tool monitor]执行工具: rag_summarize
+2026-02-22 23:41:28 - agent - INFO - middleware.py:29 - [tool monitor]参数: {'query': '扫地机器人在26摄氏度50%湿度环境下的保养方法'}
+2026-02-22 23:42:54 - agent - INFO - middleware.py:32 - [tool monitor]工具rag_summarize调用成功
+2026-02-22 23:42:54 - agent - INFO - middleware.py:51 - [log_before_model]: 即将调用模型，带有7条消息，消息如下：
+2026-02-22 23:42:54 - agent - INFO - middleware.py:54 - [log_before_model]: ----------省略已输出内容----------
+2026-02-22 23:42:54 - agent - INFO - middleware.py:56 - [log_before_model][ToolMessage]: 参考资料中未提及扫地机器人在26摄氏度50%湿度环境下的具体保养方法。
+2026-02-22 23:43:40 - agent - INFO - middleware.py:28 - [tool monitor]执行工具: rag_summarize
+2026-02-22 23:43:40 - agent - INFO - middleware.py:29 - [tool monitor]参数: {'query': '扫地机器人春夏季节保养方法 温湿度适中'}
+2026-02-22 23:45:08 - agent - INFO - middleware.py:32 - [tool monitor]工具rag_summarize调用成功
+2026-02-22 23:45:08 - agent - INFO - middleware.py:51 - [log_before_model]: 即将调用模型，带有9条消息，消息如下：
+2026-02-22 23:45:08 - agent - INFO - middleware.py:54 - [log_before_model]: ----------省略已输出内容----------
+2026-02-22 23:45:08 - agent - INFO - middleware.py:56 - [log_before_model][ToolMessage]: 春夏季节温湿度适中，扫地机器人保养应重点清洁尘盒、滤网和滚刷，避免毛发缠绕；定期检查边刷和传感器是否积灰；保持充电座干燥清洁，防止受潮；建议每月对电池进行一次完全充放电以维持性能。

@@ -49,3 +49,4 @@ for chunk in agent.stream(
             print(f"工具调用： { [tc['name'] for tc in latest_message.tool_calls]  }")
     except AttributeError as e:
         pass
+
